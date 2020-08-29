@@ -56,9 +56,10 @@ public class ProjetoIndividual extends javax.swing.JFrame {
         btAcao.setBackground(new java.awt.Color(255, 255, 255));
         btAcao.setFont(new java.awt.Font("Gill Sans MT", 1, 14)); // NOI18N
         btAcao.setText("Análisar componentes");
-        btAcao.setBorder(null);
+        btAcao.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btAcao.setBorderPainted(false);
         btAcao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btAcao.setMargin(new java.awt.Insets(3, 14, 3, 14));
         btAcao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btAcaoActionPerformed(evt);
@@ -192,10 +193,10 @@ public class ProjetoIndividual extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbNome4)
+                    .addComponent(lbMedia3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lbMax3, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(lbMin3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lbMedia3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(lbMin3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(pbPorcentagem3, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -207,61 +208,79 @@ public class ProjetoIndividual extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+        //  Vetores de cada componente para guardar os dados
         Vector  vAnalise1 = new Vector();
         Vector  vAnalise2 = new Vector();
         Vector  vAnalise3 = new Vector();
         
+        //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tProcessador = 0;
+        //  Contador para ir contando quantos valores foram incluidos no vetor
         Integer cProcessador = 0;
         
+        //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tMemoria = 0;
+        //  Contador para ir contando quantos valores foram incluidos no vetor
         Integer cMemoria = 0;
         
+        //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tDisco = 0;
+        //  Contador para ir contando quantos valores foram incluidos no vetor
         Integer cDisco = 0;
         
     private void btAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAcaoActionPerformed
-        
+        //  Gerando valores aleatórios para cada componente
         Integer n1 = (int) (Math.random()*101);
         Integer n2 = (int) (Math.random()*101);
         Integer n3 = (int) (Math.random()*101);
  
+        //  Atribuindo os valores aleatórios nos vetores
         vAnalise1.add(n1);
         vAnalise2.add(n2);
         vAnalise3.add(n3);
         
-        //Média Processador
+        //  O cálculo da média é no seguinte raciocínio:
+        //  A váriavel t(Componente) vai somando os valores aleatórios que foram gerados
+        //  A váriavel c(Componente) vai contando quantas vezes o botão foi clicado
+        //  Sendo assim, o cálculo da média é simplesmente dividir o total atribuido pela quantidade de cliques (quantidade de números atribuidos)
+        //  Ou seja:
+        //  Soma dos valores aleatórios / quantidade de vezes que os valores foram atribuidos ao vetor = média
+        
+        //  Média Processador
         tProcessador += n1;
         cProcessador += 1;
         float mProcessador = tProcessador/cProcessador;
         lbMedia1.setText(String.format("Média: %.0f %%", mProcessador));
         
-        //Média Memória
+        //  Média Memória
         tMemoria += n2;
         cMemoria += 1;
         float mMemoria = tMemoria/cMemoria;
         lbMedia2.setText(String.format("Média: %.0f %%", mMemoria));
         
-        //Média Disco
+        //  Média Disco
         tDisco += n3;
         cDisco += 1;
         float mDisco = tDisco/cDisco;
         lbMedia3.setText(String.format("Média: %.0f %%", mDisco));
         
+        //  Alterando o valor da barra(ProgressBar) para o valor aleatório
         pbPorcentagem1.setValue(n1);
         pbPorcentagem2.setValue(n2); 
         pbPorcentagem3.setValue(n3); 
         
-        //Máximo
+        //  Valor máximo de cada vetor
         lbMax1.setText(String.format("Max: %d %%", Collections.max(vAnalise1)));
         lbMax2.setText(String.format("Max: %d %%", Collections.max(vAnalise2)));
         lbMax3.setText(String.format("Max: %d %%", Collections.max(vAnalise3)));
         
-        //Mínimo
+        //  Valor mínimo de cada vetor
         lbMin1.setText(String.format("Min: %d %%", Collections.min(vAnalise1)));
         lbMin2.setText(String.format("Min: %d %%", Collections.min(vAnalise2)));
         lbMin3.setText(String.format("Min: %d %%", Collections.min(vAnalise3)));
 
+        //  If's para descrever o estado do componente de acordo com o tamanho do valor aleatório gerado
+        // Cada estado possui uma cor para melhor análise
         if (n1 <= 60) {
             lbFrase1.setText(String.format("Normal", n1));
             lbFrase1.setForeground(Color.decode("#006400"));
