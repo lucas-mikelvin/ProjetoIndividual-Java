@@ -6,8 +6,8 @@
 package mikelvin.projeto.individual;
 
 import java.awt.Color;
-import java.util.Collections;
-import java.util.Vector;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  *
@@ -208,37 +208,39 @@ public class ProjetoIndividual extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-        //  Vetores de cada componente para guardar os dados
-        Vector  vAnalise1 = new Vector();
-        Vector  vAnalise2 = new Vector();
-        Vector  vAnalise3 = new Vector();
+        //  Variaveis de cada componente para guardar os dados
+        Integer  vAnalise1 = 0;
+        Integer  vAnalise2 = 0;
+        Integer  vAnalise3 = 0;
+        
+        //  Variaveis para receber o valor máximo
+        Integer maxProcessador = 0;
+        Integer maxMemoria = 0;
+        Integer maxDisco = 0;
+        
+        //  Variaveis para receber o valor minimo
+        Integer minProcessador = 100;
+        Integer minMemoria = 100;
+        Integer minDisco = 100;
         
         //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tProcessador = 0;
-        //  Contador para ir contando quantos valores foram incluidos no vetor
-        Integer cProcessador = 0;
-        
-        //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tMemoria = 0;
-        //  Contador para ir contando quantos valores foram incluidos no vetor
-        Integer cMemoria = 0;
-        
-        //  Váriavel do tipo inteira para receber os valores que futuramente serão gerados
         Integer tDisco = 0;
         //  Contador para ir contando quantos valores foram incluidos no vetor
+        Integer cProcessador = 0;
+        Integer cMemoria = 0;
         Integer cDisco = 0;
         
     private void btAcaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btAcaoActionPerformed
         //  Gerando valores aleatórios para cada componente
-        Integer n1 = (int) (Math.random()*101);
-        Integer n2 = (int) (Math.random()*101);
-        Integer n3 = (int) (Math.random()*101);
- 
-        //  Atribuindo os valores aleatórios nos vetores
-        vAnalise1.add(n1);
-        vAnalise2.add(n2);
-        vAnalise3.add(n3);
-        
+        // Processador
+        Integer n1 = ThreadLocalRandom.current().nextInt(10, 100);
+        //Memoria
+        Integer n2 = ThreadLocalRandom.current().nextInt(35, 100);
+        //Disco
+        Integer n3 = ThreadLocalRandom.current().nextInt(1, 100);
+   
         //  O cálculo da média é no seguinte raciocínio:
         //  A váriavel t(Componente) vai somando os valores aleatórios que foram gerados
         //  A váriavel c(Componente) vai contando quantas vezes o botão foi clicado
@@ -265,19 +267,58 @@ public class ProjetoIndividual extends javax.swing.JFrame {
         lbMedia3.setText(String.format("Média: %.0f %%", mDisco));
         
         //  Alterando o valor da barra(ProgressBar) para o valor aleatório
+        // Exibindo o valor atual da barra com setStringPainted
+        pbPorcentagem1.setStringPainted(true);
+        pbPorcentagem1.setForeground(Color.BLACK);
         pbPorcentagem1.setValue(n1);
+        
+        pbPorcentagem2.setStringPainted(true);
+        pbPorcentagem2.setForeground(Color.BLACK);
         pbPorcentagem2.setValue(n2); 
+        
+        pbPorcentagem3.setStringPainted(true);
+        pbPorcentagem3.setForeground(Color.BLACK);
         pbPorcentagem3.setValue(n3); 
         
-        //  Valor máximo de cada vetor
-        lbMax1.setText(String.format("Max: %d %%", Collections.max(vAnalise1)));
-        lbMax2.setText(String.format("Max: %d %%", Collections.max(vAnalise2)));
-        lbMax3.setText(String.format("Max: %d %%", Collections.max(vAnalise3)));
+        //  Valor máximo de cada componente
+        //Processador
+        if (maxProcessador < n1) {
+            maxProcessador = n1;
+        }
+        lbMax1.setText(String.format("Max: %d %%", maxProcessador));  
         
-        //  Valor mínimo de cada vetor
-        lbMin1.setText(String.format("Min: %d %%", Collections.min(vAnalise1)));
-        lbMin2.setText(String.format("Min: %d %%", Collections.min(vAnalise2)));
-        lbMin3.setText(String.format("Min: %d %%", Collections.min(vAnalise3)));
+        //Memoria
+        if (maxMemoria < n2) {
+            maxMemoria= n2;
+        }
+        lbMax2.setText(String.format("Max: %d %%", maxMemoria));  
+        
+        //Disco
+        if (maxDisco < n3) {
+            maxDisco = n3;
+        }
+        lbMax3.setText(String.format("Max: %d %%", maxDisco));  
+        
+        
+        //  Valor mínimo de cada componente
+        //Processador
+        if (minProcessador > n1) {
+            minProcessador = n1;
+        }
+        lbMin1.setText(String.format("Min: %d %%", minProcessador));
+        
+        //Memoria
+        if (minMemoria > n2) {
+            minMemoria= n2;
+        }
+        lbMin2.setText(String.format("Min: %d %%", minMemoria));
+
+        //Disco
+        if (minDisco > n3) {
+            minDisco = n3;
+        }
+        lbMin3.setText(String.format("Min: %d %%", minDisco));
+
 
         //  If's para descrever o estado do componente de acordo com o tamanho do valor aleatório gerado
         // Cada estado possui uma cor para melhor análise
